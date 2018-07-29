@@ -4,6 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "trello-token": "node trelloInfo",
+    "lambda-prep": "shopt -s extglob && yes | cp -rf ^(node_mod*|lambda|package.json|.env|trelloInfo.js) ./lambda && yarn install --production && cd ../ && zip lambda.zip ./lambda",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
