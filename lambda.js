@@ -3,6 +3,12 @@ const github = require('./github');
 const { moveToQA, moveToCR } = trello;
 const { commitToPR } = github;
 
+function hasProperTitle(title) {
+  const titleParts = title.split('.');
+  const titleID = titleParts[1] && titleParts[0];
+  return titleID && titleID.length > 1 ? titleID : false;
+}
+
 exports.handler = async body => {
   const pushToGH = list => {
     const { repository: { full_name: fullName = '' }, number = null } = body;
@@ -19,18 +25,17 @@ exports.handler = async body => {
     return resp;
   }
 
-  const cardID = body.pull_request.title.split('.')[0];
+  let resp = 'Something went wrong';
 
-  if (!cardID || cardID.length < 1) {
-    pushToGH(`Please create a title of the format:
-      <trello_id>. Title of the PR
-      `);
-    return {
+  if (!hasProperTitle(body.pull_request.title)) {
+    resp = {
       msg: 'Wrong title format',
     };
+    pushToGH(`${resp}
+      <trello_id>. Title of the PR
+      `);
+    return resp;
   }
-
-  let resp = 'Something went wrong';
 
   if (body.action === 'opened' && !body.pull_request.merged) {
     await moveToCR(cardID);
@@ -42,5 +47,7 @@ exports.handler = async body => {
     resp = moveCard(cardID, 'QA');
   }
 
-  return resp;
+  return {
+    msg: resp,
+  };
 };

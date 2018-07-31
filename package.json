@@ -4,9 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "test": "ava",
     "trello-token": "node trelloInfo",
-    "lambda-prep": "shopt -s extglob && yes | cp -rf ^(node_mod*|lambda|package.json|.env|trelloInfo.js) ./lambda && yarn install --production && cd ../ && zip lambda.zip ./lambda",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "lambda-prep": "shopt -s extglob && yes | cp -rf ^(node_mod*|lambda|package.json|.env|trelloInfo.js) ./lambda && yarn install --production && cd ../ && zip lambda.zip ./lambda"
   },
   "keywords": [],
   "author": "",
@@ -17,5 +17,9 @@
     "koa-bodyparser": "^4.2.1",
     "koa-router": "^7.4.0",
     "node-fetch": "^2.1.2"
+  },
+  "devDependencies": {
+    "ava": "1.0.0-beta.6",
+    "nock": "^9.4.3"
   }
 }
