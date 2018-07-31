@@ -1,7 +1,7 @@
 const lambda = require('./lambda').handler;
 const test = require('ava');
-const prWrongTitle = require('./fixtures/prRightTitle');
-const prRightTitle = require('./fixtures/prWrongTitle');
+const prWrongTitle = require('./fixtures/prWrongTitle');
+const prRightTitle = require('./fixtures/prRightTitle');
 
 test('Webhook: PR request with wrong title', async t => {
   t.deepEqual(
@@ -12,7 +12,7 @@ test('Webhook: PR request with wrong title', async t => {
   );
 });
 
-test('Webhook: PR request with right title', async t => {
+test('Webhook: PR request with right title but failed', async t => {
   t.deepEqual(
     {
       msg: 'Something went wrong',
